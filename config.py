@@ -6,8 +6,7 @@ Configuration options for the project2 package
 # IMPORTANT: Please do NOT modify this file
 
 import os
-import toolkit_config as tcfg
-
+from event_study import toolkit_config as tcfg
 
 ROOTDIR = os.path.join(tcfg.PRJDIR, 'project2')
 DATADIR = os.path.join(ROOTDIR, 'data')
