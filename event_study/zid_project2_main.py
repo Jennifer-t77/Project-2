@@ -1,5 +1,4 @@
 """ zid_project2_main.py
-import pandas as pd
 
 """
 # ----------------------------------------------------------------------------
@@ -14,7 +13,8 @@ import pandas as pd
 #   - ......
 # Hint: you can utilize modules covered in our lectures, listed above and any others.
 # ----------------------------------------------------------------------------
-
+A = "test update"
+print(A)
 
 # ----------------------------------------------------------------------------
 # Part 2: import modules inside the project2 package
