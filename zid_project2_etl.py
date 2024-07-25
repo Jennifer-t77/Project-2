@@ -435,6 +435,22 @@ def aj_ret_dict(tickers, start, end):
         ----------------------------------------
     """
     # <COMPLETE THIS PART>
+    ret_dic = {}
+    d_ret_list = []
+    for tic in tickers:
+        tic_prc = read_prc_csv(tic, start=start, end=end)
+        d_ret = daily_return_cal(tic_prc)
+        d_ret_list.append(d_ret)
+    df_d_ret = pd.concat(d_ret_list, axis=1)
+    m_ret_list = []
+    for tic in tickers:
+        tic_prc = read_prc_csv(tic, start=start, end=end)
+        m_ret = monthly_return_cal(tic_prc)
+        m_ret_list.append(m_ret)
+    df_m_ret = pd.concat(m_ret_list, axis=1)
+    ret_dic['Daily'] = df_d_ret
+    ret_dic['Monthly'] = df_m_ret
+    return ret_dic
 
 
 # ----------------------------------------------------------------------------
@@ -511,20 +527,20 @@ def _test_aj_ret_dict(tickers, start, end):
 
 if __name__ == "__main__":
     pass
-    #test read_prc_csv function
-    _test_read_prc_csv()
+    # #test read_prc_csv function
+    # _test_read_prc_csv()
 
-    # use made-up series to test daily_return_cal function
-    _test_daily_return_cal()
-    # use AAPL prc series to test daily_return_cal function
-    ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
-    _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
-
-    # use made-up series to test daily_return_cal function
-    _test_monthly_return_cal()
-    # use AAPL prc series to test daily_return_cal function
-    ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
-    _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
+    # # use made-up series to test daily_return_cal function
+    # _test_daily_return_cal()
+    # # use AAPL prc series to test daily_return_cal function
+    # ser_price = read_prc_csv(tic='AAPL', start='2020-09-03', end='2020-09-09')
+    # _test_daily_return_cal(made_up_data=False, ser_prc=ser_price)
+    #
+    # # use made-up series to test daily_return_cal function
+    # _test_monthly_return_cal()
+    # # use AAPL prc series to test daily_return_cal function
+    # ser_price = read_prc_csv(tic='AAPL', start='2020-08-31', end='2021-01-10')
+    # _test_monthly_return_cal(made_up_data=False, ser_prc=ser_price)
     # # test aj_ret_dict function
     # _test_aj_ret_dict(['AAPL', 'TSLA'], start='2010-06-25', end='2010-08-05')
 
