@@ -13,10 +13,6 @@ import pandas as pd
 from project2 import util
 from project2 import config as cfg
 import os
-from project2 import zid_project2_characteristics as cha
-from project2 import zid_project2_portfolio as pf
-
-
 
 # ----------------------------------------------------------------------------
 # Part 4.2: Complete the read_prc_csv function
