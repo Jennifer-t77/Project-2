@@ -9,7 +9,12 @@
 # Note: please keep the aliases consistent throughout the project.
 #       For details, review the import statements in zid_project2_main.py
 
-# <COMPLETE THIS PART>
+import pandas as pd
+from project2 import util
+from project2 import config as cfg
+import os
+from project2 import zid_project2_characteristics as cha
+from project2 import zid_project2_portfolio as pf
 
 
 
@@ -97,8 +102,16 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
        'aaa.csv' are different files).
 
     """
-
-    # <COMPLETE THIS PART>
+    tic = tic.lower()
+    path_file = os.path.join(cfg.DATADIR, f"{tic}_prc.csv")
+    data = pd.read_csv(path_file)
+    df = pd.DataFrame(data)
+    # df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date',inplace=True)
+    df = df.loc[start: end]
+    ser = pd.Series(data=df[prc_col].values, index=df.index)
+    ser.name =tic
+    return ser
 
 
 # ----------------------------------------------------------------------------
