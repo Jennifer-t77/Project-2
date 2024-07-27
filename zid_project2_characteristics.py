@@ -151,7 +151,20 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
     """
 
     # <COMPLETE THIS PART>
+    daily_returns = ret['Daily'].copy()
+    daily_returns['Year_Month'] = daily_returns.index.to_period('M')
 
+    # Calculate monthly volatility
+    vol_df = daily_returns.groupby('Year_Month').apply(
+        lambda x: x.std() if len(x) >= 18 else pd.Series([None] * x.shape[1], index=x.columns)
+    )
+
+    vol_df.columns = [f"{col}_{cha_name}" for col in vol_df.columns]
+
+    # Remove rows with all NaN values
+    vol_df.dropna(how='all', inplace=True)
+
+    return vol_df
 
 # ----------------------------------------------------------------------------
 # Part 5.5: Complete the merge_tables function
