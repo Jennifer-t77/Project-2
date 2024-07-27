@@ -259,19 +259,22 @@ def get_cumulative_ret(df):
 #     Please name the three output files as DM_Ret_dict, Vol_Ret_mrg_df, EW_LS_pf_df.
 #     You can utilize the three output files and auxiliary functions to answer the questions.
 
+DM_Ret_dict = pd.read_csv('DM_Ret_dict.csv', index_col=0, parse_dates=True)
+Vol_Ret_mrg_df = pd.read_csv('Vol_Ret_mrg_df.csv', index_col=0, parse_dates=True)
+EW_LS_pf_df = pd.read_csv('EW_LS_pf_df.csv', index_col=0, parse_dates=True)
 
 # Q1: Which stock in your sample has the lowest average daily return for the
 #     year 2008 (ignoring missing values)? Your answer should include the
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q1_ANSWER = '?'
+Q1_ANSWER = 'average_daily_returns_2008.idxmin()'
 
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q2_ANSWER = '?'
+Q2_ANSWER = 'average_daily_returns_2008.min()'
 
 
 # Q3: Which stock in your sample has the highest average monthly return for the
@@ -279,26 +282,26 @@ Q2_ANSWER = '?'
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q3_ANSWER = '?'
+Q3_ANSWER = 'average_monthly_returns_2019.idxmax()'
 
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q4_ANSWER = '?'
+Q4_ANSWER = 'average_monthly_returns_2019.max()'
 
 
 # Q5: What is the average monthly total volatility for stock 'TSLA' in the year 2010?
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
-Q5_ANSWER = '?'
+Q5_ANSWER = 'tsla_vol_2010.mean()'
 
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
-Q6_ANSWER = '?'
+Q6_ANSWER = 'round(v_vol_2008 / v_vol_2018, 1)'
 
 
 # Q7: How many effective year-month for stock 'TSLA' in year 2010. An effective year-month
@@ -306,28 +309,28 @@ Q6_ANSWER = '?'
 #     are not null.
 #     Use the output dataframe, Vol_Ret_mrg_df, to do the calculation.
 #     Answer should be an integer
-Q7_ANSWER = '?'
+Q7_ANSWER = 'tsla_2010.shape[0]'
 
 
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
 #     The answer string should only include two integers separating by a comma.
 #     The first number represents number of rows.
 #     Don't include any other signs or letters.
-Q8_ANSWER = '?'
+Q8_ANSWER = 'f"{EW_LS_pf_df.shape[0]},{EW_LS_pf_df.shape[1]}"'
 
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-Q9_ANSWER = '?'
+Q9_ANSWER = 'ewp_rank_1_2019.mean()'
 
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
 #      over the whole sample period?
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-Q10_ANSWER = '?'
+Q10_ANSWER = 'get_cumulative_ret(EW_LS_pf_df['ls'])'
 
 
 # ----------------------------------------------------------------------------
@@ -356,6 +359,35 @@ n_obs = '?'
 
 
 # <ADD THE t_stat FUNCTION HERE>
+
+import scipy.stats as stats
+
+def t_stat(EW_LS_pf_df):
+    """
+    Calculate the mean, t-statistic, and number of observations for the 'ls' column in EW_LS_pf_df.
+
+    Parameters
+    ----------
+    EW_LS_pf_df : pd.DataFrame
+        DataFrame containing long-short portfolio returns.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        DataFrame containing 'ls_bar', 'ls_t', and 'n_obs'.
+    """
+    ls = EW_LS_pf_df['ls']
+    ls_bar = round(ls.mean(), 4)
+    ls_t = round(stats.ttest_1samp(ls, 0)[0], 4)
+    n_obs = ls.count()
+
+    result = pd.DataFrame({'ls_bar': [ls_bar], 'ls_t': [ls_t], 'n_obs': [n_obs]}, index=['ls'])
+    return result
+
+# Calculate t_stat
+result = t_stat(EW_LS_pf_df)
+print(result)
+
 
 
 # ----------------------------------------------------------------------------
