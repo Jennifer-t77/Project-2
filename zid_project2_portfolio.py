@@ -569,10 +569,10 @@ if __name__ == "__main__":
     # # use test return dict and cha df to test functions:
     ret_dict = etl.aj_ret_dict(tickers=['AAPL', 'TSLA', 'aal', 'abbv', 'bac'],
                                start='2010-05-15', end='2010-08-31')
-    # charc = cha.cha_main(ret_dict, 'vol', ['Daily',])
-    # # #
-    # _test_pf_input_sanity_check(charc, 'vol')
-    # _test_df_reshape(charc, 'vol')
-    # _test_stock_sorting(charc, 'vol', 2)
-    # _test_pf_cal(charc, 'vol', 2)
-    # _test_pf_main(charc, 'vol', 2)
+    charc = cha.cha_main(ret_dict, 'vol', ['Daily',])
+    # #
+    _test_pf_input_sanity_check(charc, 'vol')
+    _test_df_reshape(charc, 'vol')
+    _test_stock_sorting(charc, 'vol', 2)
+    _test_pf_cal(charc, 'vol', 2)
+    _test_pf_main(charc, 'vol', 2)
