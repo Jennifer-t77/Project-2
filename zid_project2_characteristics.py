@@ -11,10 +11,11 @@
 
 # <COMPLETE THIS PART>
 import pandas as pd
+import numpy as np
 from project2 import util
 from project2 import config as cfg
 from project2 import zid_project2_etl as etl
-import os
+
 
 # ----------------------------------------------------------------------------------------
 # Part 5.3: read the vol_input_sanity_check function
@@ -163,6 +164,7 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
 
     # Remove rows with all NaN values
     vol_df.dropna(how='all', inplace=True)
+    vol_df.index.name = 'Year_Month'
 
     return vol_df
 
