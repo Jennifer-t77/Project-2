@@ -212,7 +212,14 @@ def get_cumulative_ret(df):
     """
     # <COMPLETE THIS PART>
 
+    # Ensure the index is a PeriodIndex
+    if not isinstance(df.index, pd.PeriodIndex):
+        raise ValueError("The DataFrame index must be a PeriodIndex")
 
+    # Calculate the cumulative return for each column
+    cumulative_ret = (1 + df).prod() - 1
+
+    return cumulative_ret
 # ----------------------------------------------------------------------------
 # Part 8: Answer questions
 # ----------------------------------------------------------------------------
@@ -453,8 +460,8 @@ def _test_get_cumulative_ret():
 if __name__ == "__main__":
     pass
 
-
-
+_test_get_avg()
+_test_get_cumulative_ret()
 
 
 
