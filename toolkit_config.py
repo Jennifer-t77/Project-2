@@ -1,6 +1,6 @@
 import os
 
-PRJDIR = "D:/Desktop/UNSW T2/FINS 5546_new/project2"
+PRJDIR = "C:\\Users\\sydne\\PycharmProjects\\Project2"
 DATADIR = os.path.join(PRJDIR, 'data')
 
-# D:\Desktop\UNSW T2\FINS 5546_new\toolkit
+# you can change the path based on the folder place in your computer
