@@ -169,6 +169,19 @@ def get_avg(df: pd.DataFrame, year):
     """
     # <COMPLETE THIS PART>
 
+    # Ensure the index is a PeriodIndex or DatetimeIndex
+    if not isinstance(df.index, (pd.PeriodIndex, pd.DatetimeIndex)):
+        raise ValueError("The DataFrame index must be a PeriodIndex or DatetimeIndex")
+
+    # Convert to PeriodIndex if it is not already
+    if not isinstance(df.index, pd.PeriodIndex):
+        df = df.to_period('M')
+
+    # Filter the DataFrame for the specified year
+    df_year = df[df.index.year == year]
+
+    # Calculate the mean for each column, ignoring NaNs
+    return df_year.mean()
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
