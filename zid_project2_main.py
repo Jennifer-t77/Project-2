@@ -259,6 +259,22 @@ def get_cumulative_ret(df):
 #     Please name the three output files as DM_Ret_dict, Vol_Ret_mrg_df, EW_LS_pf_df.
 #     You can utilize the three output files and auxiliary functions to answer the questions.
 
+tickers = list(cfg.TICMAP.keys())
+start = '2000-12-29'
+end = '2021-08-31'
+cha_name = 'vol'
+ret_freq_use = ['Daily']
+q = 3
+
+# Run the main function to generate the necessary files
+dict_ret, df_cha, df_portfolios = portfolio_main(tickers, start, end, cha_name, ret_freq_use, q)
+
+# Save the results
+dict_ret['Daily'].to_csv('DM_Ret_dict.csv')
+df_cha.to_csv('Vol_Ret_mrg_df.csv')
+df_portfolios.to_csv('EW_LS_pf_df.csv')
+
+# Load the saved files
 DM_Ret_dict = pd.read_csv('DM_Ret_dict.csv', index_col=0, parse_dates=True)
 Vol_Ret_mrg_df = pd.read_csv('Vol_Ret_mrg_df.csv', index_col=0, parse_dates=True)
 EW_LS_pf_df = pd.read_csv('EW_LS_pf_df.csv', index_col=0, parse_dates=True)
@@ -266,73 +282,48 @@ EW_LS_pf_df = pd.read_csv('EW_LS_pf_df.csv', index_col=0, parse_dates=True)
 # Q1: Which stock in your sample has the lowest average daily return for the
 #     year 2008 (ignoring missing values)? Your answer should include the
 #     ticker for this stock.
-#     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
-#     to do the calculation.
-Q1_ANSWER = 'average_daily_returns_2008.idxmin()'
-
+average_daily_returns_2008 = get_avg(DM_Ret_dict, 2008)
+Q1_ANSWER = average_daily_returns_2008.idxmin()
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
-#     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
-#     to do the calculation.
-Q2_ANSWER = 'average_daily_returns_2008.min()'
-
+Q2_ANSWER = average_daily_returns_2008.min()
 
 # Q3: Which stock in your sample has the highest average monthly return for the
 #     year 2019 (ignoring missing values)? Your answer should include the
 #     ticker for this stock.
-#     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
-#     to do the calculation.
-Q3_ANSWER = 'average_monthly_returns_2019.idxmax()'
-
+average_monthly_returns_2019 = get_avg(Vol_Ret_mrg_df, 2019)
+Q3_ANSWER = average_monthly_returns_2019.idxmax()
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
-#     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
-#     to do the calculation.
-Q4_ANSWER = 'average_monthly_returns_2019.max()'
-
+Q4_ANSWER = average_monthly_returns_2019.max()
 
 # Q5: What is the average monthly total volatility for stock 'TSLA' in the year 2010?
-#     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
-#     to do the calculation.
-Q5_ANSWER = 'tsla_vol_2010.mean()'
-
+tsla_vol_2010 = Vol_Ret_mrg_df.loc[Vol_Ret_mrg_df.index.year == 2010, 'TSLA_vol']
+Q5_ANSWER = tsla_vol_2010.mean()
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
-#     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
-#     to do the calculation.
-Q6_ANSWER = 'round(v_vol_2008 / v_vol_2018, 1)'
-
+v_vol_2008 = Vol_Ret_mrg_df.loc[Vol_Ret_mrg_df.index.year == 2008, 'V_vol'].mean()
+v_vol_2018 = Vol_Ret_mrg_df.loc[Vol_Ret_mrg_df.index.year == 2018, 'V_vol'].mean()
+Q6_ANSWER = round(v_vol_2008 / v_vol_2018, 1)
 
 # Q7: How many effective year-month for stock 'TSLA' in year 2010. An effective year-month
 #     row means both monthly return in 'tsla' column and total volatility in 'tsla_vol'
 #     are not null.
-#     Use the output dataframe, Vol_Ret_mrg_df, to do the calculation.
-#     Answer should be an integer
-Q7_ANSWER = 'tsla_2010.shape[0]'
-
+tsla_2010 = Vol_Ret_mrg_df.loc[Vol_Ret_mrg_df.index.year == 2010].dropna(subset=['TSLA', 'TSLA_vol'])
+Q7_ANSWER = tsla_2010.shape[0]
 
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
-#     The answer string should only include two integers separating by a comma.
-#     The first number represents number of rows.
-#     Don't include any other signs or letters.
-Q8_ANSWER = 'f"{EW_LS_pf_df.shape[0]},{EW_LS_pf_df.shape[1]}"'
-
+Q8_ANSWER = f"{EW_LS_pf_df.shape[0]},{EW_LS_pf_df.shape[1]}"
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
-#     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
-#     to do the calculation.
-Q9_ANSWER = 'ewp_rank_1_2019.mean()'
-
+ewp_rank_1_2019 = EW_LS_pf_df.loc[EW_LS_pf_df.index.year == 2019, 'ewp_rank_1']
+Q9_ANSWER = ewp_rank_1_2019.mean()
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
 #      over the whole sample period?
-#      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
-#     to do the calculation.
-Q10_ANSWER = 'get_cumulative_ret(EW_LS_pf_df['ls'])'
-
-
+Q10_ANSWER = get_cumulative_ret(EW_LS_pf_df['ls'])
 # ----------------------------------------------------------------------------
 # Part 9: Add t_stat function
 # ----------------------------------------------------------------------------
