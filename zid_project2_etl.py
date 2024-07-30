@@ -198,7 +198,8 @@ def daily_return_cal(prc):
 
     """
     prc.index = pd.to_datetime(prc.index)
-    res = prc.pct_change().dropna()
+    prc_filled = prc.ffill()  # 使用 ffill() 代替 fillna(method='pad')
+    res = prc_filled.pct_change().dropna()
     res.name = prc.name
     return res
 
