@@ -17,6 +17,7 @@ from project2 import config as cfg
 from project2 import zid_project2_etl as etl
 
 
+
 # ----------------------------------------------------------------------------------------
 # Part 5.3: read the vol_input_sanity_check function
 #           and use it to test if the inputs of zid_project2_characteristics are proper
@@ -152,22 +153,27 @@ def vol_cal(ret, cha_name, ret_freq_use: list):
     """
 
     # <COMPLETE THIS PART>
-    # Extract daily returns
-    daily_ret_df = ret['Daily'].copy()
+    ret_copy = ret['Daily'].copy()
 
-    # Group by monthly period and calculate standard deviation
-    monthly_volatility = daily_ret_df.groupby(daily_ret_df.index.to_period('M')).apply(
-        lambda x: x.std() if x.shape[0] >= 18 else pd.Series([None] * x.shape[1], index=x.columns)
-    )
+    # Ensure the index is a DatetimeIndex before converting
+    if not isinstance(ret_copy.index, pd.DatetimeIndex):
+        ret_copy.index = pd.to_datetime(ret_copy.index)
 
-    # Rename columns to include the characteristic name
-    monthly_volatility.columns = [f"{col}_{cha_name}" for col in monthly_volatility.columns]
+    ret_copy['Year_Month'] = ret_copy.index.to_period('M')
 
-    # Set the index name to 'Year_Month'
-    monthly_volatility.index.name = 'Year_Month'
+    def calculate_volatility(x):
+        if len(x) < 18:
+            return pd.Series([None] * len(x.columns), index=x.columns)
+        else:
+            return x.std()
 
-    # Drop rows with all NaN values
-    return monthly_volatility.dropna(how='all')
+    vol_df = ret_copy.groupby('Year_Month').apply(calculate_volatility)
+    vol_df = vol_df.add_suffix(f'_{cha_name}')
+    vol_df.index.name = 'Year_Month'  # Ensure the index name is set to 'Year_Month'
+
+    vol_df.dropna(how='all', inplace=True)
+
+    return vol_df
 
 # ----------------------------------------------------------------------------
 # Part 5.5: Complete the merge_tables function
@@ -240,16 +246,38 @@ def merge_tables(ret, df_cha, cha_name):
      - Read shift() documentations to understand how to shift the values of a DataFrame along a specified axis
     """
     # <COMPLETE THIS PART>
-    # Extract monthly returns DataFrame
-    monthly_ret_df = ret['Monthly'].copy()
 
-    # Shift characteristics DataFrame by 1 month
-    df_cha_shifted = df_cha.shift(1)
+    # Ensure copies of the dataframes to prevent modifying original data
+    monthly_ret = ret['Monthly'].copy()
+    df_cha = df_cha.copy()
 
-    # Merge the monthly returns DataFrame with the shifted characteristics DataFrame
-    merged_df = pd.merge(monthly_ret_df, df_cha_shifted, left_index=True, right_index=True, how='left')
+    # Ensure indices are PeriodIndex
+    if not isinstance(monthly_ret.index, pd.PeriodIndex):
+        print("Converting monthly_ret index to PeriodIndex")
+        print("monthly_ret index before conversion:", monthly_ret.index)
+        monthly_ret.index = pd.to_datetime(monthly_ret.index.astype(str) + '-01', errors='coerce').to_period('M')
+        print("monthly_ret index after conversion:", monthly_ret.index)
+
+    if not isinstance(df_cha.index, pd.PeriodIndex):
+        print("Converting df_cha index to PeriodIndex")
+        print("df_cha index before conversion:", df_cha.index)
+        df_cha.index = pd.to_datetime(df_cha.index.astype(str) + '-01', errors='coerce').to_period('M')
+        print("df_cha index after conversion:", df_cha.index)
+
+    # Merge the monthly returns and characteristics dataframes
+    merged_df = monthly_ret.merge(df_cha, left_index=True, right_index=True, how='left')
+
+    # Shift the characteristics columns by 1 month forward
+    characteristics_columns = [col for col in merged_df.columns if col.endswith(f'_{cha_name}')]
+    merged_df[characteristics_columns] = merged_df[characteristics_columns].shift(1)
+
+    # Drop rows where all values are NaN
+    merged_df.dropna(how='all', inplace=True)
+
+    merged_df.index.name = 'Year_Month'  # Ensure the index name is set to 'Year_Month'
 
     return merged_df
+
 
 # ------------------------------------------------------------------------------------
 # Part 5.2: Read the cha_main function and understand the workflow in this script
@@ -299,17 +327,16 @@ def cha_main(ret, cha_name, ret_freq_use: list):
         in the module with appropriate logic to handle the inputs and outputs as described.
     """
     # <COMPLETE THIS PART>
-    # Step 1: Input Sanity Check
+    # Step 1: Sanity check for inputs
     vol_input_sanity_check(ret, cha_name, ret_freq_use)
 
-    # Step 2: Characteristic Calculation
+    # Step 2: Calculate the stock characteristics
     df_cha = vol_cal(ret, cha_name, ret_freq_use)
 
-    # Step 3: Merge Tables
-    merged_df = merge_tables(ret, df_cha, cha_name)
+    # Step 3: Merge the characteristics with the monthly return table
+    df_final = merge_tables(ret, df_cha, cha_name)
 
-    # Step 4: Return Result
-    return merged_df
+    return df_final
 
 def _test_ret_dict_gen():
     """ Function for generating made-up dictionary output from etl.py.
