@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/z5506985_event_study.iml" filepath="$PROJECT_DIR$/.idea/z5506985_event_study.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/project2.iml" filepath="$PROJECT_DIR$/.idea/project2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../.idea/toolkit.iml" filepath="$PROJECT_DIR$/../.idea/toolkit.iml" />
     </modules>
   </component>
 </project>
