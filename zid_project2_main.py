@@ -345,7 +345,6 @@ n_obs = '235'
 # <ADD THE t_stat FUNCTION HERE>
 import pandas as pd
 
-# Define t_stat function
 def t_stat(df):
     """
     Calculate the mean (ls_bar), t-statistic (ls_t), and number of observations (n_obs)
@@ -369,19 +368,14 @@ def t_stat(df):
     result = pd.DataFrame({'ls_bar': [ls_bar], 'ls_t': [ls_t], 'n_obs': [n_obs]}, index=['ls'])
     return result
 
-# Main function
 if __name__ == "__main__":
-    # Ensure the 'EW_LS_pf_df.csv' file path is correct
     file_path = 'EW_LS_pf_df.csv'
     EW_LS_pf_df = pd.read_csv(file_path, index_col=0, parse_dates=True, date_parser=lambda x: pd.to_datetime(x, format='%Y-%m'))
 
-    # Calculate t-stat results
     t_stat_result = t_stat(EW_LS_pf_df)
 
-    # Print results
     print(t_stat_result)
 
-    # Save results to variables for use in the file
     ls_bar = round(t_stat_result['ls_bar'].values[0], 4)
     ls_t = round(t_stat_result['ls_t'].values[0], 4)
     n_obs = int(t_stat_result['n_obs'].values[0])
