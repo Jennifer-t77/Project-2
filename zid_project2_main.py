@@ -220,7 +220,7 @@ def get_cumulative_ret(df):
     cumulative_ret = (1 + df).prod() - 1
 
     return cumulative_ret
-# ----------------------------------------------------------------------------
+----------------------------------------------------------------------------
 # Part 8: Answer questions
 # ----------------------------------------------------------------------------
 # NOTES:
@@ -266,18 +266,16 @@ cha_name = 'vol'
 ret_freq_use = ['Daily']
 q = 3
 
-# Run the main function to generate the necessary files
 dict_ret, df_cha, df_portfolios = portfolio_main(tickers, start, end, cha_name, ret_freq_use, q)
 
-# Save the results
 dict_ret['Daily'].to_csv('DM_Ret_dict.csv')
 df_cha.to_csv('Vol_Ret_mrg_df.csv')
 df_portfolios.to_csv('EW_LS_pf_df.csv')
 
-# Load the saved files
 DM_Ret_dict = pd.read_csv('DM_Ret_dict.csv', index_col=0, parse_dates=True)
 Vol_Ret_mrg_df = pd.read_csv('Vol_Ret_mrg_df.csv', index_col=0, parse_dates=True)
-EW_LS_pf_df = pd.read_csv('EW_LS_pf_df.csv', index_col=0, parse_dates=True)
+EW_LS_pf_df = pd.read_csv('EW_LS_pf_df.csv', index_col=0, parse_dates=True, date_format='%Y-%m-%d')
+
 
 # Q1: Which stock in your sample has the lowest average daily return for the
 #     year 2008 (ignoring missing values)? Your answer should include the
@@ -370,7 +368,8 @@ def t_stat(df):
 
 if __name__ == "__main__":
     file_path = 'EW_LS_pf_df.csv'
-    EW_LS_pf_df = pd.read_csv(file_path, index_col=0, parse_dates=True, date_parser=lambda x: pd.to_datetime(x, format='%Y-%m'))
+    EW_LS_pf_df = pd.read_csv(file_path, index_col=0, parse_dates=True, date_format='%Y-%m')
+
 
     t_stat_result = t_stat(EW_LS_pf_df)
 
