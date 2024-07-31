@@ -411,7 +411,46 @@ if __name__ == "__main__":
 # .......
 #
 # Please replace the """?""" with your team's project 2 git log:
-git_log = """?"""
+git_log = """
+1a67b10	Ahdiani Febriyanti	Wed Jul 31 03:54:08 2024 +1000	Merge remote-tracking branch 'origin/master'
+148d2eb	Ahdiani Febriyanti	Wed Jul 31 03:53:56 2024 +1000	change the function
+f04eb01	z5536092	Tue Jul 30 23:14:44 2024 +1000	Update zid_project2_main.py
+85412d5	Ahdiani Febriyanti	Tue Jul 30 22:16:07 2024 +1000	Merge remote-tracking branch 'origin/master'
+8a36d6e	Ahdiani Febriyanti	Tue Jul 30 22:14:14 2024 +1000	refresh the portfolio
+c382ce9	Jiani Tang	Tue Jul 30 21:53:23 2024 +1000	etl_debug_finished
+003c8a0	Jiani Tang	Tue Jul 30 21:41:21 2024 +1000	etl_debug_finished
+7358595	Jiani Tang	Tue Jul 30 21:21:06 2024 +1000	etl_debug_finished
+327d6bc	z5536092	Tue Jul 30 02:07:07 2024 +1000	Update zid_project2_main.py
+17fe8d5	z5536092	Sat Jul 27 21:01:46 2024 +1000	Update zid_project2_main.py
+1cb1868	z5507587AhdianiFebriyanti	Sat Jul 27 18:59:19 2024 +1000	Delete toolkit_config.py
+ff8b982	Ahdiani Febriyanti	Sat Jul 27 18:04:32 2024 +1000	toolkit_config.py
+bf9c3de	z5507587AhdianiFebriyanti	Sat Jul 27 17:51:41 2024 +1000	Delete toolkit_config
+3243c0e	z5507587AhdianiFebriyanti	Sat Jul 27 17:37:12 2024 +1000	Create toolkit_config
+a076967	Ahdiani Febriyanti	Sat Jul 27 16:35:10 2024 +1000	7.1-7.2
+316dce6	Ahdiani Febriyanti	Sat Jul 27 16:31:13 2024 +1000	7.1
+4f1bbdb	Ahdiani Febriyanti	Sat Jul 27 16:21:56 2024 +1000	import fr etl and cha
+0d8d248	Ahdiani Febriyanti	Sat Jul 27 16:21:18 2024 +1000	import fr etl and cha
+ba1ceb9	Ahdiani Febriyanti	Sat Jul 27 16:16:25 2024 +1000	5.1-5.5
+6aca47c	Ahdiani Febriyanti	Sat Jul 27 16:06:41 2024 +1000	merge_table function
+a57d4b9	Ahdiani Febriyanti	Sat Jul 27 16:02:05 2024 +1000	vol_cal function
+1ec98cb	Ahdiani Febriyanti	Sat Jul 27 15:42:53 2024 +1000	import modules
+66b96ee	Ahdiani Febriyanti	Sat Jul 27 14:16:15 2024 +1000	complete vol_cal function
+191655a	Ahdiani Febriyanti	Sat Jul 27 13:32:18 2024 +1000	Merge remote-tracking branch 'origin/master'
+5d87f2d	z5507587AhdianiFebriyanti	Sat Jul 27 12:56:44 2024 +1000	import modules
+16f20f8	z5507587AhdianiFebriyanti	Sat Jul 27 12:56:44 2024 +1000	Delete toolkit_config.py
+694420a	Ahdiani Febriyanti	Sat Jul 27 10:01:45 2024 +1000	Initial commit
+669b9e7	Jiani Tang	Thu Jul 25 19:58:23 2024 +1000	Q2-Q4 Finished
+e1a9e11	Jiani Tang	Thu Jul 25 19:56:52 2024 +1000	Q2-Q4 Finished
+2f8b0a8	Jiani Tang	Thu Jul 25 19:19:49 2024 +1000	4.4 update
+8020b59	Jiani Tang	Thu Jul 25 14:48:24 2024 +1000	4.2 update
+69e3b8c	Jiani Tang	Wed Jul 24 15:06:59 2024 +1000	test finished
+3e88cd0	Jiani Tang	Wed Jul 24 14:01:12 2024 +1000	test finished
+b7597c3	Jiani Tang	Wed Jul 24 13:33:25 2024 +1000	file change test
+de320ca	Jiani Tang	Wed Jul 24 13:33:01 2024 +1000	file change test "import pandas as pd"
+929a750	Jiani Tang	Wed Jul 24 13:08:41 2024 +1000	file change test "import pandas as pd"
+5ce66f1	Jiani Tang	Wed Jul 24 12:53:23 2024 +1000	update the file position
+a3dc0f0	Jiani Tang	Wed Jul 24 12:42:10 2024 +1000	Initial commit
+"""
 
 # ----------------------------------------------------------------------------
 # Part 11: project 2 mini-presentation
