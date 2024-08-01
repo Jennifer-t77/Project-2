@@ -405,6 +405,13 @@ if __name__ == "__main__":
 #
 # Please replace the """?""" with your team's project 2 git log:
 git_log = """
+92d2b5e	Jiani Tang	Thu Aug 1 11:15:24 2024 +1000	typo & pre_link update
+9208460	Jiani Tang	Thu Aug 1 11:11:55 2024 +1000	extra changes about .idea
+7d3dc8f	z5536092	Thu Aug 1 00:42:48 2024 +1000	Update zid_project2_main.py
+f1e6dd3	z5536092	Wed Jul 31 16:27:51 2024 +1000	Update zid_project2_main.py
+aa7be41	Jiani Tang	Wed Jul 31 13:00:31 2024 +1000	extra changes about .idea
+e58dace	Jiani Tang	Wed Jul 31 12:58:28 2024 +1000	git log update
+3c5ff94	Jiani Tang	Wed Jul 31 12:57:39 2024 +1000	etl_debug_finished
 1a67b10	Ahdiani Febriyanti	Wed Jul 31 03:54:08 2024 +1000	Merge remote-tracking branch 'origin/master'
 148d2eb	Ahdiani Febriyanti	Wed Jul 31 03:53:56 2024 +1000	change the function
 f04eb01	z5536092	Tue Jul 30 23:14:44 2024 +1000	Update zid_project2_main.py
