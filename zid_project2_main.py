@@ -469,8 +469,8 @@ a3dc0f0	Jiani Tang	Wed Jul 24 12:42:10 2024 +1000	Initial commit
 # Please replace the """?""" with your team's presentation video link.
 # If you have set a password, please replace the """?""" with the actual password to ensure accessibility,
 # or leave the Presentation_Password variable as it is.
-Presentation_link = """?"""
-Presentation_Password = """?"""
+Presentation_link = """https://youtu.be/QKsNmj58zKc"""
+# Presentation_Password = """?"""
 
 
 def _test_get_avg():
